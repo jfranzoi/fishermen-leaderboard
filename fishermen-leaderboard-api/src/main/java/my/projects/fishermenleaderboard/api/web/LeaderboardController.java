@@ -2,10 +2,7 @@ package my.projects.fishermenleaderboard.api.web;
 
 import my.projects.fishermenleaderboard.api.domain.Fisherman;
 import my.projects.fishermenleaderboard.api.domain.FishermenHistory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +19,8 @@ public class LeaderboardController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<FishermenView> index() {
-        return fishermenHistory.collect().stream().limit(5)
+    public List<FishermenView> index(@RequestParam(value = "from", defaultValue = "0", required = false) int from) {
+        return fishermenHistory.collect().stream().skip(from).limit(5)
                 .map(it -> toFisherman(it))
                 .collect(Collectors.toList());
     }

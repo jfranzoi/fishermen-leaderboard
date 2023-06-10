@@ -9,18 +9,20 @@ export type Fisherman = {
 }
 
 export const useFishermen = () => {
-    const [data, setData] = useState<Fisherman[] | undefined>(undefined)
+    const [results, setResults] = useState<Fisherman[]>([])
     const [isLoading, setLoading] = useState(false)
 
-    useEffect(() => {
+    function loadNext() {
         setLoading(true)
-        fetch(`${baseURL}/fishermen`)
+        fetch(`${baseURL}/fishermen?from=${results.length}`)
             .then((res) => res.json())
             .then((data) => {
-                setData(data)
+                setResults(results.concat(data))
                 setLoading(false)
             })
-    }, []);
+    }
 
-    return [data, isLoading] as const;
+    useEffect(loadNext, []);
+
+    return [results, isLoading, loadNext] as const;
 };

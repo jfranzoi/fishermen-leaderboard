@@ -61,4 +61,18 @@ class LeaderboardControllerTest {
         mvc.perform(get("/fishermen"))
                 .andExpect(jsonPath("$.size()").value("5"));
     }
+
+    @Test
+    void nextPagination_fewData() throws Exception {
+        IntStream.rangeClosed(1, 8).forEach(it -> {
+            fishermenHistory.addFisherman(
+                    String.format("000%s", it),
+                    "Mario",
+                    String.format("Paulo %s-th", it)
+            );
+        });
+
+        mvc.perform(get("/fishermen?from=5"))
+                .andExpect(jsonPath("$.size()").value("3"));
+    }
 }

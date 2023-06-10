@@ -6,8 +6,8 @@
 * (DONE) board: 5 fishermen, at first
 * (DONE) board: fishermen name
 * (DONE) board: ranking, sorted by amount, descending
+* (DONE) board: "load more", to load next 5
 * (TODO) board: last month collected amount (kg)
-* (TODO) board: "load more", to load next 5
 * (TODO) fisherman detail: last 10 recollections
 * (TODO) fisherman detail, recollections: date, amount (kg)
 * (TODO) pictures (from octet-stream): fishermen picture @ board, recollection picture @ fisherman detail

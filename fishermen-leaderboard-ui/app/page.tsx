@@ -5,7 +5,7 @@ import FishermanCard from './components/FishermanCard';
 
 export default function Home() {
 
-  const [fishermen, isLoading] = useFishermen();
+  const [fishermen, isLoading, loadNext] = useFishermen();
 
   if (isLoading) return <p>Loading...</p>
   if (!fishermen) return <p>No results</p>
@@ -19,6 +19,7 @@ export default function Home() {
             <FishermanCard content={each} />
           );
         })}
+        <div><a href='#' onClick={loadNext}>Load More</a></div>
       </div>
     </main>
   )
