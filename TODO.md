@@ -5,7 +5,7 @@
 * (DONE) spike: async cached data
 * (DONE) board: 5 fishermen, at first
 * (DONE) board: fishermen name
-* (TODO) board: ranking, sorted by amount, descending
+* (DONE) board: ranking, sorted by amount, descending
 * (TODO) board: last month collected amount (kg)
 * (TODO) board: "load more", to load next 5
 * (TODO) fisherman detail: last 10 recollections

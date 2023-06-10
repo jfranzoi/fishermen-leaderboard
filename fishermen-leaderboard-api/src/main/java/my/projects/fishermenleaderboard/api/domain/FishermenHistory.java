@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class FishermenHistory {
@@ -26,6 +28,8 @@ public class FishermenHistory {
     }
 
     public List<Fisherman> collect() {
-        return fishermen;
+        return fishermen.stream()
+                .sorted(Comparator.comparing(Fisherman::amount).reversed())
+                .collect(Collectors.toList());
     }
 }

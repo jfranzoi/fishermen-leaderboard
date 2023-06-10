@@ -34,4 +34,28 @@ class FishermenHistoryTest {
 
         assertThat(amounts, contains("18.50"));
     }
+
+    @Test
+    void collect_rankingByAmount() {
+        FishermenHistory history = new FishermenHistory();
+
+        history.addFisherman("0011", "Benedetto", "Carpi");
+        history.onRecollection("0011", new BigDecimal("0"));
+
+        history.addFisherman("0022", "Fabrizio", "Benvenuto");
+        history.onRecollection("0022", new BigDecimal("18.50"));
+
+        history.addFisherman("0033", "Paulo", "Alvarez");
+        history.onRecollection("0033", new BigDecimal("38.20"));
+
+        List<String> names = history.collect().stream()
+                .map(it -> it.name())
+                .collect(Collectors.toList());
+
+        assertThat(names, contains(
+                "Paulo Alvarez",
+                "Fabrizio Benvenuto",
+                "Benedetto Carpi"
+        ));
+    }
 }
