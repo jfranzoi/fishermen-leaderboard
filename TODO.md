@@ -2,7 +2,7 @@
 
 * (TODO) spike: next.js
 * (DONE) spike: exam APIs (fisherman, recollections)
-* (TODO) spike: async cached data
+* (DONE) spike: async cached data
 * (TODO) board: 5 fishermen, at first
 * (TODO) board: "load more", to load next 5
 * (TODO) board: ranking, sorted by monthly collected amount, descending
@@ -18,6 +18,7 @@
 
 * cannot rely on real-time API calls, as it takes too long (approx 7 sec)
 * images are octet-streams, pictures should be scripted (client or server side)
+* async cached data: @Scheduled with Spring Boot as backend, in-memory storage
 
 ## Questions
 
