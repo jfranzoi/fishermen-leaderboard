@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-( cd api ; ./buid.sh ; ./start.sh -d )
+( cd fishermen-leaderboard-api ; ./buid.sh ; ./start.sh -d )
