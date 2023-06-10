@@ -1,4 +1,5 @@
 package my.projects.fishermenleaderboard.api.integration;
 
-class OgyreFishermen {
+public class OgyreFishermen {
+    public String _id;
 }
