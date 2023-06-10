@@ -3,7 +3,7 @@
 * (TODO) spike: next.js
 * (DONE) spike: exam APIs (fisherman, recollections)
 * (DONE) spike: async cached data
-* (TODO) board: 5 fishermen, at first
+* (WIP) board: 5 fishermen, at first
 * (TODO) board: "load more", to load next 5
 * (TODO) board: ranking, sorted by monthly collected amount, descending
 * (TODO) board: fishermen name, last month collected amount (kg)
