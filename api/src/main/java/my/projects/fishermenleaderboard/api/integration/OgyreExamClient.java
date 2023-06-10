@@ -18,4 +18,9 @@ public class OgyreExamClient {
                 .collect(Collectors.toList());
     }
 
+    public List<OgyreRecollection> recollections(String fisherman) {
+        return restOperations.getForEntity("/recollections/{fisherman}", OgyreRecollectionsResponse.class, fisherman)
+                .getBody()
+                .listOfrecollections;
+    }
 }

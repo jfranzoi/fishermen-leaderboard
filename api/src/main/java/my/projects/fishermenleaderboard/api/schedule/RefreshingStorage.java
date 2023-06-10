@@ -39,8 +39,11 @@ public class RefreshingStorage {
     public void scheduled() {
         LOGGER.info("Rescheduled!");
 
-        client.fishermen().stream().forEach(it -> {
-            fishermenHistory.addFisherman(it._id);
+        client.fishermen().stream().forEach(fisherman -> {
+            fishermenHistory.addFisherman(fisherman._id);
+            client.recollections(fisherman._id).stream().forEach(recollection -> {
+                fishermenHistory.onRecollection(fisherman._id, recollection.kg);
+            });
         });
     }
 }

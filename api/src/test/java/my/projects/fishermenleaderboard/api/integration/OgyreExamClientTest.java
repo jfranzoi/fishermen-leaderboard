@@ -7,10 +7,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.contains;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -113,6 +115,69 @@ class OgyreExamClientTest {
         );
 
         List<OgyreFishermen> result = new OgyreExamClient(restTemplate).fishermen();
-        assertThat(result, hasSize(2));
+
+        List<String> ids = result.stream().map(it -> it._id).collect(Collectors.toList());
+        assertThat(ids, contains(
+                "61eacd09010d36584891e10a",
+                "61f14d6026713dce105556d3"
+        ));
+    }
+
+    @Test
+    void collectRecollections() {
+        server.expect(requestTo("https://my.local/api/exam/recollections/61eacd09010d36584891e10a")).andRespond(withSuccess()
+                .contentType(MediaType.APPLICATION_JSON).body("{\n" +
+                        "    \"listOfrecollections\": [\n" +
+                        "        {\n" +
+                        "            \"_id\": \"646c80c0a0a7f5da7666c68c\",\n" +
+                        "            \"kg\": 8.5,\n" +
+                        "            \"fishermanID\": \"61eacd09010d36584891e10a\",\n" +
+                        "            \"ongID\": \"61eab1a3010d36584891e00d\",\n" +
+                        "            \"date\": \"2023-05-18T00:00:00.000Z\",\n" +
+                        "            \"pictureRecollection\": \"https://ogyre.fra1.digitaloceanspaces.com/1684832448022-0z52\",\n" +
+                        "            \"kg_availables\": 8.5,\n" +
+                        "            \"status\": \"available\",\n" +
+                        "            \"createdAt\": \"2023-05-23T09:00:48.029Z\",\n" +
+                        "            \"updatedAt\": \"2023-05-24T16:30:01.268Z\",\n" +
+                        "            \"__v\": 0\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "            \"_id\": \"646c80e9a0a7f5da7666c697\",\n" +
+                        "            \"kg\": 4.5,\n" +
+                        "            \"fishermanID\": \"61eacd09010d36584891e10a\",\n" +
+                        "            \"ongID\": \"61eab1a3010d36584891e00d\",\n" +
+                        "            \"date\": \"2023-05-18T00:00:00.000Z\",\n" +
+                        "            \"pictureRecollection\": \"https://ogyre.fra1.digitaloceanspaces.com/1684832489944-xuyz\",\n" +
+                        "            \"kg_availables\": 4.5,\n" +
+                        "            \"status\": \"available\",\n" +
+                        "            \"createdAt\": \"2023-05-23T09:01:29.958Z\",\n" +
+                        "            \"updatedAt\": \"2023-05-24T16:30:01.268Z\",\n" +
+                        "            \"__v\": 0\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "            \"_id\": \"647606ec90b6fb6946b694fb\",\n" +
+                        "            \"kg\": 11.3,\n" +
+                        "            \"fishermanID\": \"61eacd09010d36584891e10a\",\n" +
+                        "            \"ongID\": \"61eab1a3010d36584891e00d\",\n" +
+                        "            \"date\": \"2023-05-24T00:00:00.000Z\",\n" +
+                        "            \"pictureRecollection\": \"https://ogyre.fra1.digitaloceanspaces.com/1685456620644-pozv\",\n" +
+                        "            \"kg_availables\": 0,\n" +
+                        "            \"status\": \"sold\",\n" +
+                        "            \"createdAt\": \"2023-05-30T14:23:40.648Z\",\n" +
+                        "            \"updatedAt\": \"2023-06-02T15:00:01.896Z\",\n" +
+                        "            \"__v\": 0\n" +
+                        "        }\n" +
+                        "    ]\n" +
+                        "}"
+                ));
+
+        List<OgyreRecollection> response = new OgyreExamClient(restTemplate).recollections("61eacd09010d36584891e10a");
+
+        List<BigDecimal> amounts = response.stream().map(it -> it.kg).collect(Collectors.toList());
+        assertThat(amounts, contains(
+                new BigDecimal("8.5"),
+                new BigDecimal("4.5"),
+                new BigDecimal("11.3")
+        ));
     }
 }
