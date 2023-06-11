@@ -43,6 +43,7 @@ public class LeaderboardController {
         result.setId(fisherman.id());
         result.setName(fisherman.name());
         result.setAmount(fisherman.amountIn(period));
+        result.setPicture(fisherman.picture());
         return result;
     }
 

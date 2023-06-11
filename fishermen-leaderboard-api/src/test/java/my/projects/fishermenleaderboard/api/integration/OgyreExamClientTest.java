@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -117,13 +117,20 @@ class OgyreExamClientTest {
                         "    }]")
         );
 
-        List<OgyreFishermen> result = new OgyreExamClient(restTemplate).fishermen();
+        List<OgyreFishermen> response = new OgyreExamClient(restTemplate).fishermen();
 
-        List<String> ids = result.stream().map(it -> it._id).collect(Collectors.toList());
+        List<String> ids = response.stream()
+                .map(it -> it._id)
+                .collect(Collectors.toList());
         assertThat(ids, contains(
                 "61eacd09010d36584891e10a",
                 "61f14d6026713dce105556d3"
         ));
+
+        List<String> pictures = response.stream()
+                .map(it -> it.fishermanPicture.toString())
+                .collect(Collectors.toList());
+        assertThat(pictures, everyItem(startsWith("https://ogyre.fra1.digitaloceanspaces.com/")));
     }
 
     @Test
@@ -176,18 +183,27 @@ class OgyreExamClientTest {
 
         List<OgyreRecollection> response = new OgyreExamClient(restTemplate).recollections("61eacd09010d36584891e10a");
 
-        List<BigDecimal> amounts = response.stream().map(it -> it.kg).collect(Collectors.toList());
+        List<BigDecimal> amounts = response.stream()
+                .map(it -> it.kg)
+                .collect(Collectors.toList());
         assertThat(amounts, contains(
                 new BigDecimal("8.5"),
                 new BigDecimal("4.5"),
                 new BigDecimal("11.3")
         ));
 
-        List<ZonedDateTime> dates = response.stream().map(it -> it.date).collect(Collectors.toList());
+        List<ZonedDateTime> dates = response.stream()
+                .map(it -> it.date)
+                .collect(Collectors.toList());
         assertThat(dates, contains(
                 ZonedDateTime.parse("2023-05-18T00:00Z[UTC]"),
                 ZonedDateTime.parse("2023-05-18T00:00Z[UTC]"),
                 ZonedDateTime.parse("2023-05-24T00:00Z[UTC]")
         ));
+
+        List<String> pictures = response.stream()
+                .map(it -> it.pictureRecollection.toString())
+                .collect(Collectors.toList());
+        assertThat(pictures, everyItem(startsWith("https://ogyre.fra1.digitaloceanspaces.com/")));
     }
 }

@@ -1,6 +1,7 @@
 package my.projects.fishermenleaderboard.api.schedule;
 
 import my.projects.fishermenleaderboard.api.domain.FishermenHistory;
+import my.projects.fishermenleaderboard.api.domain.Recollection;
 import my.projects.fishermenleaderboard.api.integration.OgyreExamClient;
 import my.projects.fishermenleaderboard.api.integration.RestOperationsCreator;
 import org.slf4j.Logger;
@@ -40,9 +41,14 @@ public class RefreshingStorage {
         LOGGER.info("Rescheduled!");
 
         client.fishermen().stream().forEach(fisherman -> {
-            fishermenHistory.addFisherman(fisherman._id, fisherman.name, fisherman.surname);
+            fishermenHistory.addFisherman(fisherman._id,
+                    fisherman.name, fisherman.surname, fisherman.fishermanPicture
+            );
+
             client.recollections(fisherman._id).stream().forEach(recollection -> {
-                fishermenHistory.addRecollection(fisherman._id, recollection.kg, recollection.date);
+                fishermenHistory.addRecollection(fisherman._id, new Recollection(
+                        recollection.kg, recollection.date, recollection.pictureRecollection
+                ));
             });
         });
     }

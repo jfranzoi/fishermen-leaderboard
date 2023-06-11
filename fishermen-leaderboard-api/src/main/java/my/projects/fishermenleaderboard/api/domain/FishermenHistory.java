@@ -4,9 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import java.net.URL;
 import java.time.Period;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,14 +18,16 @@ public class FishermenHistory {
 
     private List<Fisherman> fishermen = new ArrayList<>();
 
-    public void addFisherman(String id, String name, String surname) {
+    public void addFisherman(String id, String name, String surname, URL picture) {
         LOGGER.info("Adding fisherman, id: {}, name: {}, surname: {}", id, name, surname);
-        by(id).orElseGet(() -> addWith(id)).named(name, surname);
+        by(id).orElseGet(() -> addWith(id))
+                .named(name, surname)
+                .picture(picture);
     }
 
-    public void addRecollection(String fisherman, BigDecimal amount, ZonedDateTime date) {
-        LOGGER.info("Adding recollection, fisherman: {}, amount: {}", fisherman, amount);
-        by(fisherman).ifPresent(it -> it.addRecollection(amount, date));
+    public void addRecollection(String fisherman, Recollection recollection) {
+        LOGGER.info("Adding recollection, fisherman: {}, recollection: {}", fisherman, recollection);
+        by(fisherman).ifPresent(it -> it.add(recollection));
     }
 
     public List<Fisherman> collect(Period period) {
