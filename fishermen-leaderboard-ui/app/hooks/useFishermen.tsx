@@ -11,12 +11,14 @@ export type Fisherman = {
 export const useFishermen = () => {
     const [results, setResults] = useState<Fisherman[]>([])
     const [isLoading, setLoading] = useState(false)
+    const [page, setPage] = useState(0);
 
     function loadNext() {
         setLoading(true)
-        fetch(`${baseURL}/fishermen?from=${results.length}`)
+        fetch(`${baseURL}/fishermen?size=5&page=${page + 1}`)
             .then((res) => res.json())
             .then((data) => {
+                setPage(page + 1)
                 setResults(results.concat(data))
                 setLoading(false)
             })

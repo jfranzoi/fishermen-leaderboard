@@ -41,7 +41,7 @@ class LeaderboardControllerTest {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto");
         fishermenHistory.onRecollection("0011", new BigDecimal("30.5"));
 
-        mvc.perform(get("/fishermen"))
+        mvc.perform(get("/fishermen?size=5&page=1"))
                 .andExpect(jsonPath("$.size()").value("1"))
                 .andExpect(jsonPath("$[0].id").value("0011"))
                 .andExpect(jsonPath("$[0].name").value("Fabrizio Benvenuto"))
@@ -58,7 +58,7 @@ class LeaderboardControllerTest {
             );
         });
 
-        mvc.perform(get("/fishermen"))
+        mvc.perform(get("/fishermen?size=5&page=1"))
                 .andExpect(jsonPath("$.size()").value("5"));
     }
 
@@ -72,7 +72,7 @@ class LeaderboardControllerTest {
             );
         });
 
-        mvc.perform(get("/fishermen?from=5"))
+        mvc.perform(get("/fishermen?size=5&page=2"))
                 .andExpect(jsonPath("$.size()").value("3"));
     }
 }
