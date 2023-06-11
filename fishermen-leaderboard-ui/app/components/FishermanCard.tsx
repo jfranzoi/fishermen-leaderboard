@@ -9,6 +9,7 @@ export default function FishermanCard({ content }: Props): JSX.Element {
     return (
         <div className={styles.card}>
             <span>{content.name}: {content.amount} kg</span>
+            <img className={styles.picture} src={content.picture} />
         </div>
     );
 

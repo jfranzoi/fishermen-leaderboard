@@ -6,6 +6,7 @@ export type Fisherman = {
     id: string;
     name: string;
     amount: number;
+    picture: string;
 }
 
 export const useFishermen = () => {

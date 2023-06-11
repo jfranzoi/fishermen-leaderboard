@@ -10,7 +10,7 @@
 * (DONE) board: last month collected amount (kg)
 * (TODO) fisherman detail: last 10 recollections
 * (TODO) fisherman detail, recollections: date, amount (kg)
-* (WIP) pictures (from octet-stream): fishermen picture @ board
+* (DONE) pictures (from octet-stream): fishermen picture @ board
 * (TODO) pictures (from octet-stream): recollection picture @ fisherman detail
 * (DONE) NFR, security: API key not accessible to clients
 * (TODO) NFR, usability: desktop and mobile
