@@ -5,10 +5,7 @@ import FishermanCard from './components/FishermanCard';
 import styles from './page.module.css';
 
 export default function Home() {
-
   const [fishermen, isLoading, loadNext] = useFishermen();
-
-  if (isLoading) return <p>Loading...</p>
 
   return (
     <main>
@@ -16,10 +13,12 @@ export default function Home() {
         <h1 className={styles.header}>Top Scorer</h1>
         {fishermen.map((each) => {
           return (
-            <FishermanCard content={each} />
+            <FishermanCard key={each.id} content={each} />
           );
         })}
-        <div><a href='#' onClick={loadNext}>Load More</a></div>
+        <button className={styles.submitBtn} onClick={loadNext} disabled={isLoading}>
+          {!isLoading ? 'Load More' : '...'}
+        </button>
       </div>
     </main>
   )

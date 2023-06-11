@@ -10,6 +10,17 @@
     align-items: center;
 }
 
+.submitBtn {
+    background: #f5b40d;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+    padding: 1rem;
+  }
+
 .card {
     margin: 1rem;
     padding: 1rem;
