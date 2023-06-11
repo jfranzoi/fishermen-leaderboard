@@ -10,6 +10,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -180,6 +181,13 @@ class OgyreExamClientTest {
                 new BigDecimal("8.5"),
                 new BigDecimal("4.5"),
                 new BigDecimal("11.3")
+        ));
+
+        List<ZonedDateTime> dates = response.stream().map(it -> it.date).collect(Collectors.toList());
+        assertThat(dates, contains(
+                ZonedDateTime.parse("2023-05-18T00:00Z[UTC]"),
+                ZonedDateTime.parse("2023-05-18T00:00Z[UTC]"),
+                ZonedDateTime.parse("2023-05-24T00:00Z[UTC]")
         ));
     }
 }

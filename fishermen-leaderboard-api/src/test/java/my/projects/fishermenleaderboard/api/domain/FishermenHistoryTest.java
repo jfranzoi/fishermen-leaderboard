@@ -3,6 +3,8 @@ package my.projects.fishermenleaderboard.api.domain;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.Period;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,14 +13,16 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 
 class FishermenHistoryTest {
+    private Period oneMonth = Period.ofDays(30);
 
     @Test
     void addFisherman_new() {
         FishermenHistory history = new FishermenHistory();
         history.addFisherman("0011", "Fabrizio", "Benvenuto");
 
-        assertThat(history.collect(), hasSize(1));
-        List<String> names = history.collect().stream().map(it -> it.name()).collect(Collectors.toList());
+        assertThat(history.collect(oneMonth), hasSize(1));
+
+        List<String> names = history.collect(oneMonth).stream().map(it -> it.name()).collect(Collectors.toList());
         assertThat(names, contains("Fabrizio Benvenuto"));
     }
 
@@ -28,22 +32,36 @@ class FishermenHistoryTest {
         history.addFisherman("0011", "Fabrizio", "Benvenuto");
         history.addFisherman("0011", "Fabrizio", "Benvenuto Jr");
 
-        assertThat(history.collect(), hasSize(1));
-        List<String> names = history.collect().stream().map(it -> it.name()).collect(Collectors.toList());
+        assertThat(history.collect(oneMonth), hasSize(1));
+
+        List<String> names = history.collect(oneMonth).stream().map(it -> it.name()).collect(Collectors.toList());
         assertThat(names, contains("Fabrizio Benvenuto Jr"));
     }
 
     @Test
-    void onRecollection_onExistingFisherman() {
+    void addRecollection_onExistingFisherman() {
         FishermenHistory history = new FishermenHistory();
         history.addFisherman("0011", "Fabrizio", "Benvenuto");
-        history.addRecollection("0011", new BigDecimal("18.50"));
+        history.addRecollection("0011", new BigDecimal("18.50"), ZonedDateTime.now());
 
-        List<String> amounts = history.collect().stream()
-                .map(it -> it.amount().toPlainString())
+        List<String> amounts = history.collect(oneMonth).stream()
+                .map(it -> it.amountIn(oneMonth).toPlainString())
                 .collect(Collectors.toList());
 
         assertThat(amounts, contains("18.50"));
+    }
+
+    @Test
+    void addRecollection_onUnknownFisherman() {
+        FishermenHistory history = new FishermenHistory();
+        history.addFisherman("0011", "Fabrizio", "Benvenuto");
+        history.addRecollection("0099", new BigDecimal("18.50"), ZonedDateTime.now());
+
+        List<String> amounts = history.collect(oneMonth).stream()
+                .map(it -> it.amountIn(oneMonth).toPlainString())
+                .collect(Collectors.toList());
+
+        assertThat(amounts, contains("0"));
     }
 
     @Test
@@ -51,15 +69,15 @@ class FishermenHistoryTest {
         FishermenHistory history = new FishermenHistory();
 
         history.addFisherman("0011", "Benedetto", "Carpi");
-        history.addRecollection("0011", new BigDecimal("0"));
+        history.addRecollection("0011", new BigDecimal("0"), ZonedDateTime.now());
 
         history.addFisherman("0022", "Fabrizio", "Benvenuto");
-        history.addRecollection("0022", new BigDecimal("18.50"));
+        history.addRecollection("0022", new BigDecimal("18.50"), ZonedDateTime.now());
 
         history.addFisherman("0033", "Paulo", "Alvarez");
-        history.addRecollection("0033", new BigDecimal("38.20"));
+        history.addRecollection("0033", new BigDecimal("38.20"), ZonedDateTime.now());
 
-        List<String> names = history.collect().stream()
+        List<String> names = history.collect(oneMonth).stream()
                 .map(it -> it.name())
                 .collect(Collectors.toList());
 
@@ -67,6 +85,30 @@ class FishermenHistoryTest {
                 "Paulo Alvarez",
                 "Fabrizio Benvenuto",
                 "Benedetto Carpi"
+        ));
+    }
+
+    @Test
+    void collect_rankingWithinPeriod() {
+        FishermenHistory history = new FishermenHistory();
+
+        history.addFisherman("0011", "Benedetto", "Carpi");
+        history.addRecollection("0011", new BigDecimal("10.50"), ZonedDateTime.now().minusDays(10));
+
+        history.addFisherman("0022", "Fabrizio", "Benvenuto");
+        history.addRecollection("0022", new BigDecimal("18.50"), ZonedDateTime.now().minusDays(4));
+
+        history.addFisherman("0033", "Paulo", "Alvarez");
+        history.addRecollection("0033", new BigDecimal("38.20"), ZonedDateTime.now().minusDays(45));
+
+        List<String> names = history.collect(oneMonth).stream()
+                .map(it -> it.name())
+                .collect(Collectors.toList());
+
+        assertThat(names, contains(
+                "Fabrizio Benvenuto",
+                "Benedetto Carpi",
+                "Paulo Alvarez"
         ));
     }
 }

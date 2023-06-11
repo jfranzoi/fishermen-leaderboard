@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,17 +29,20 @@ public class LeaderboardController {
             @RequestParam(value = "size", required = false, defaultValue = "10") int size
     ) {
         Pagination pagination = new Pagination(size, page);
-        LOGGER.info("Collecting, pagination: [{}]", pagination);
-        return fishermenHistory.collect().stream().skip(pagination.from()).limit(pagination.to())
-                .map(it -> toFisherman(it))
+        Period period = Period.ofDays(30);
+        LOGGER.info("Collecting, period: [{}], pagination: [{}]", period, pagination);
+
+        return fishermenHistory.collect(period).stream()
+                .skip(pagination.from()).limit(pagination.to())
+                .map(it -> toFisherman(it, period))
                 .collect(Collectors.toList());
     }
 
-    private FishermenView toFisherman(Fisherman fisherman) {
+    private FishermenView toFisherman(Fisherman fisherman, Period period) {
         FishermenView result = new FishermenView();
         result.setId(fisherman.id());
         result.setName(fisherman.name());
-        result.setAmount(fisherman.amount());
+        result.setAmount(fisherman.amountIn(period));
         return result;
     }
 

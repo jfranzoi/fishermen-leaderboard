@@ -1,6 +1,8 @@
 package my.projects.fishermenleaderboard.api.domain;
 
 import java.math.BigDecimal;
+import java.time.Period;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +29,14 @@ public class Fisherman {
         return name;
     }
 
-    public BigDecimal amount() {
+    public BigDecimal amountIn(Period period) {
         return recollections.stream()
+                .filter(it -> it.date.isAfter(ZonedDateTime.now().minus(period)))
                 .map(it -> it.amount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public void addRecollection(BigDecimal amount) {
-        recollections.add(new Recollection(amount));
+    public void addRecollection(BigDecimal amount, ZonedDateTime date) {
+        recollections.add(new Recollection(amount, date));
     }
 }

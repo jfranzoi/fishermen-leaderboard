@@ -7,11 +7,11 @@
 * (DONE) board: fishermen name
 * (DONE) board: ranking, sorted by amount, descending
 * (DONE) board: "load more", to load next 5
-* (TODO) board: last month collected amount (kg)
+* (DONE) board: last month collected amount (kg)
 * (TODO) fisherman detail: last 10 recollections
 * (TODO) fisherman detail, recollections: date, amount (kg)
 * (TODO) pictures (from octet-stream): fishermen picture @ board, recollection picture @ fisherman detail
-* (TODO) NFR, security: API key not accessible to clients
+* (DONE) NFR, security: API key not accessible to clients
 * (TODO) NFR, usability: desktop and mobile
 
 
@@ -24,3 +24,4 @@
 ## Questions
 
 * recollections: what's the difference between `kg` and `kg_availables`?
+* ranking, by last month recollected amount: last 30 days or in current month of the year?
