@@ -16,7 +16,7 @@ export const useFishermen = () => {
 
     function loadNext() {
         setLoading(true)
-        fetch(`${baseURL}/fishermen?size=5&page=${page + 1}`)
+        fetch(`${baseURL}/fishermen?days=30&size=5&page=${page + 1}`)
             .then((res) => res.json())
             .then((data) => {
                 setPage(page + 1)

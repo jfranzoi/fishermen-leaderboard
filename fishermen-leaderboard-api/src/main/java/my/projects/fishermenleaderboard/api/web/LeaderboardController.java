@@ -26,10 +26,11 @@ public class LeaderboardController {
     @ResponseBody
     public List<FishermenView> index(
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int size
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(value = "days", required = false, defaultValue = "5") int days
     ) {
         Pagination pagination = new Pagination(size, page);
-        Period period = Period.ofDays(30);
+        Period period = Period.ofDays(days);
         LOGGER.info("Collecting, period: [{}], pagination: [{}]", period, pagination);
 
         return fishermenHistory.collect(period).stream()

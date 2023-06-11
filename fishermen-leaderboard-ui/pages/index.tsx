@@ -1,10 +1,10 @@
 'use client';
 
-import { useFishermen } from './hooks/useFishermen';
-import FishermanCard from './components/FishermanCard';
-import styles from './page.module.css';
+import { useFishermen } from '../app/hooks/useFishermen';
+import FishermanCard from '../app/components/FishermanCard';
+import styles from './index.module.css';
 
-export default function Home() {
+export default function Index() {
   const [fishermen, isLoading, loadNext] = useFishermen();
 
   return (

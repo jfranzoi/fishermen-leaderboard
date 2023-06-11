@@ -39,7 +39,9 @@ class LeaderboardControllerTest {
     @Test
     void viewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
-        fishermenHistory.addRecollection("0011", new Recollection(new BigDecimal("30.5"), ZonedDateTime.now(), jpeg));
+        fishermenHistory.addRecollection("0011", new Recollection(
+                new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+        ));
 
         mvc.perform(get("/fishermen?size=5&page=1"))
                 .andExpect(jsonPath("$[0].id").value("0011"))
@@ -55,9 +57,22 @@ class LeaderboardControllerTest {
     }
 
     @Test
+    void withinPeriod() throws Exception {
+        fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
+        fishermenHistory.addRecollection("0011", new Recollection(
+                new BigDecimal("30.5"), ZonedDateTime.now().minusDays(10), jpeg
+        ));
+
+        mvc.perform(get("/fishermen?days=5"))
+                .andExpect(jsonPath("$[0].amount").value("0"));
+    }
+
+    @Test
     void firstPagination_tooFewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
-        fishermenHistory.addRecollection("0011", new Recollection(new BigDecimal("30.5"), ZonedDateTime.now(), jpeg));
+        fishermenHistory.addRecollection("0011", new Recollection(
+                new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+        ));
 
         mvc.perform(get("/fishermen?size=5&page=1"))
                 .andExpect(jsonPath("$.size()").value("1"));

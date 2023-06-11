@@ -8,8 +8,8 @@
 * (DONE) board: ranking, sorted by amount, descending
 * (DONE) board: "load more", to load next 5
 * (DONE) board: last month collected amount (kg)
+* (WIP) fisherman detail, recollections: date, amount (kg)
 * (TODO) fisherman detail: last 10 recollections
-* (TODO) fisherman detail, recollections: date, amount (kg)
 * (DONE) pictures (from octet-stream): fishermen picture @ board
 * (TODO) pictures (from octet-stream): recollection picture @ fisherman detail
 * (DONE) NFR, security: API key not accessible to clients
