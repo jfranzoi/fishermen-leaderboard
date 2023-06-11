@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class FishermenView {
     private String id;
-    private BigDecimal amount;
     private String name;
+    private BigDecimal amount;
 
     public void setId(String id) {
         this.id = id;

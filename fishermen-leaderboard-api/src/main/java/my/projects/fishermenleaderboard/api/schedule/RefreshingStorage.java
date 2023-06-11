@@ -42,7 +42,7 @@ public class RefreshingStorage {
         client.fishermen().stream().forEach(fisherman -> {
             fishermenHistory.addFisherman(fisherman._id, fisherman.name, fisherman.surname);
             client.recollections(fisherman._id).stream().forEach(recollection -> {
-                fishermenHistory.onRecollection(fisherman._id, recollection.kg);
+                fishermenHistory.addRecollection(fisherman._id, recollection.kg);
             });
         });
     }

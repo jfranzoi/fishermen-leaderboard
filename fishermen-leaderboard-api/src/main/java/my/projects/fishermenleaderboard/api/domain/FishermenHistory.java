@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,18 +19,27 @@ public class FishermenHistory {
 
     public void addFisherman(String id, String name, String surname) {
         LOGGER.info("Adding fisherman, id: {}, name: {}, surname: {}", id, name, surname);
-        fishermen.add(new Fisherman(id).named(name, surname));
+        by(id).orElseGet(() -> addWith(id)).named(name, surname);
     }
 
-    public void onRecollection(String fisherman, BigDecimal amount) {
-        LOGGER.info("new recollection, fisherman: {}, amount: {}", fisherman, amount);
-        fishermen.stream().filter(it -> fisherman.equals(it.id()))
-                .forEach(it -> it.addRecollection(amount));
+    public void addRecollection(String fisherman, BigDecimal amount) {
+        LOGGER.info("Adding recollection, fisherman: {}, amount: {}", fisherman, amount);
+        by(fisherman).ifPresent(it -> it.addRecollection(amount));
     }
 
     public List<Fisherman> collect() {
         return fishermen.stream()
                 .sorted(Comparator.comparing(Fisherman::amount).reversed())
                 .collect(Collectors.toList());
+    }
+
+    private Fisherman addWith(String id) {
+        Fisherman created = new Fisherman(id);
+        fishermen.add(created);
+        return created;
+    }
+
+    private Optional<Fisherman> by(String id) {
+        return fishermen.stream().filter(it -> id.equals(it.id())).findFirst();
     }
 }

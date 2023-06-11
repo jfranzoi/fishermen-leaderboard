@@ -23,10 +23,21 @@ class FishermenHistoryTest {
     }
 
     @Test
+    void addFisherman_update() {
+        FishermenHistory history = new FishermenHistory();
+        history.addFisherman("0011", "Fabrizio", "Benvenuto");
+        history.addFisherman("0011", "Fabrizio", "Benvenuto Jr");
+
+        assertThat(history.collect(), hasSize(1));
+        List<String> names = history.collect().stream().map(it -> it.name()).collect(Collectors.toList());
+        assertThat(names, contains("Fabrizio Benvenuto Jr"));
+    }
+
+    @Test
     void onRecollection_onExistingFisherman() {
         FishermenHistory history = new FishermenHistory();
         history.addFisherman("0011", "Fabrizio", "Benvenuto");
-        history.onRecollection("0011", new BigDecimal("18.50"));
+        history.addRecollection("0011", new BigDecimal("18.50"));
 
         List<String> amounts = history.collect().stream()
                 .map(it -> it.amount().toPlainString())
@@ -40,13 +51,13 @@ class FishermenHistoryTest {
         FishermenHistory history = new FishermenHistory();
 
         history.addFisherman("0011", "Benedetto", "Carpi");
-        history.onRecollection("0011", new BigDecimal("0"));
+        history.addRecollection("0011", new BigDecimal("0"));
 
         history.addFisherman("0022", "Fabrizio", "Benvenuto");
-        history.onRecollection("0022", new BigDecimal("18.50"));
+        history.addRecollection("0022", new BigDecimal("18.50"));
 
         history.addFisherman("0033", "Paulo", "Alvarez");
-        history.onRecollection("0033", new BigDecimal("38.20"));
+        history.addRecollection("0033", new BigDecimal("38.20"));
 
         List<String> names = history.collect().stream()
                 .map(it -> it.name())

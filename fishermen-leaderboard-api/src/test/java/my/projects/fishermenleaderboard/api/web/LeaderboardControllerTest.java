@@ -39,7 +39,7 @@ class LeaderboardControllerTest {
     @Test
     void firstPagination_tooFewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto");
-        fishermenHistory.onRecollection("0011", new BigDecimal("30.5"));
+        fishermenHistory.addRecollection("0011", new BigDecimal("30.5"));
 
         mvc.perform(get("/fishermen?size=5&page=1"))
                 .andExpect(jsonPath("$.size()").value("1"))
