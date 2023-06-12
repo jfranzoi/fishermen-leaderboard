@@ -1,4 +1,4 @@
-import { Recollection } from "@/app/hooks/useFishermen";
+import { Recollection } from '../../../app/hooks/useFishermen';
 
 declare type Props = {
     content: Recollection;

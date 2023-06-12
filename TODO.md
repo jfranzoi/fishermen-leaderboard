@@ -9,9 +9,9 @@
 * (DONE) board: "load more", to load next 5
 * (DONE) board: last month collected amount (kg)
 * (DONE) fisherman detail, recollections: date, amount (kg)
-* (TODO) fisherman detail: last 10 recollections
-* (DONE) pictures (from octet-stream): fishermen picture @ board
-* (TODO) pictures (from octet-stream): recollection picture @ fisherman detail
+* (DONE) fisherman detail: last 10 recollections
+* (DONE) pictures: fishermen picture @ board
+* (TODO) pictures: recollection picture @ fisherman detail
 * (DONE) NFR, security: API key not accessible to clients
 * (TODO) NFR, usability: desktop and mobile
 

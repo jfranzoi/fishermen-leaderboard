@@ -138,10 +138,10 @@ class LeaderboardControllerTest {
     void detail_recollections() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
         fishermenHistory.addRecollection("0011", new Recollection(
-                "00aa", new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+                "00aa", new BigDecimal("30.5"), ZonedDateTime.now().minusDays(1), jpeg
         ));
         fishermenHistory.addRecollection("0011", new Recollection(
-                "00bb", new BigDecimal("10.0"), ZonedDateTime.now(), jpeg
+                "00bb", new BigDecimal("10.0"), ZonedDateTime.now().minusDays(2), jpeg
         ));
 
         mvc.perform(get("/fishermen/0011"))
@@ -150,5 +150,19 @@ class LeaderboardControllerTest {
                 .andExpect(jsonPath("$.recollections[0].date").exists())
                 .andExpect(jsonPath("$.recollections[1].amount").value("10.0"))
                 .andExpect(jsonPath("$.recollections[1].date").exists());
+    }
+
+    @Test
+    void detail_lastRecollections() throws Exception {
+        fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
+        fishermenHistory.addRecollection("0011", new Recollection(
+                "00aa", new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+        ));
+        fishermenHistory.addRecollection("0011", new Recollection(
+                "00bb", new BigDecimal("10.0"), ZonedDateTime.now(), jpeg
+        ));
+
+        mvc.perform(get("/fishermen/0011?size=1"))
+                .andExpect(jsonPath("$.recollections.size()").value(1));
     }
 }

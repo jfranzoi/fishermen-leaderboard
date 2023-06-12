@@ -44,7 +44,7 @@ export const useFishermanDetail = (id: string) => {
     useEffect(() => {
         if (id) {
             setLoading(true)
-            fetch(`${baseURL}/fishermen/${id}`)
+            fetch(`${baseURL}/fishermen/${id}?size=10`)
                 .then((res) => res.json())
                 .then((data) => {
                     setResult(data)

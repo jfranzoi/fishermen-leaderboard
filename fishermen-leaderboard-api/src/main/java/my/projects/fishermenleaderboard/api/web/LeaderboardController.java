@@ -47,11 +47,14 @@ public class LeaderboardController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     @ResponseBody
-    public ResponseEntity<FishermanDetailsView> detail(@PathVariable(value = "id") String id) {
-        LOGGER.info("Details, id: [{}]", id);
+    public ResponseEntity<FishermanDetailsView> detail(
+            @PathVariable(value = "id") String id,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size
+    ) {
+        LOGGER.info("Details, id: [{}], size: [{}]", id, size);
 
         return fishermenHistory.by(id)
-                .map(x -> ResponseEntity.ok(toDetails(x)))
+                .map(x -> ResponseEntity.ok(toDetails(x, size)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -64,12 +67,12 @@ public class LeaderboardController {
         return result;
     }
 
-    private FishermanDetailsView toDetails(Fisherman fisherman) {
+    private FishermanDetailsView toDetails(Fisherman fisherman, int occurrences) {
         FishermanDetailsView result = new FishermanDetailsView();
         result.setId(fisherman.id());
         result.setName(fisherman.name());
         result.setPicture(fisherman.picture());
-        result.setRecollections(toRecollections(fisherman.recollections()));
+        result.setRecollections(toRecollections(fisherman.lastRecollections(occurrences)));
         return result;
     }
 
