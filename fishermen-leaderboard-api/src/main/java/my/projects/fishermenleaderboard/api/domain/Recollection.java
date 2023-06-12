@@ -17,6 +17,18 @@ public class Recollection {
         this.picture = picture;
     }
 
+    public BigDecimal amount() {
+        return amount;
+    }
+
+    public ZonedDateTime date() {
+        return date;
+    }
+
+    public URL picture() {
+        return picture;
+    }
+
     @Override
     public String toString() {
         return "Recollection{" +

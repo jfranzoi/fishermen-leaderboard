@@ -7,6 +7,13 @@ export type Fisherman = {
     name: string;
     amount: number;
     picture: string;
+    recollections: Recollection[];
+}
+
+export type Recollection = {
+    amount: number;
+    date: Date;
+    picture: string;
 }
 
 export const useFishermen = () => {

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.Period;
 import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,5 +50,9 @@ public class Fisherman {
                 .filter(it -> it.date.isAfter(ZonedDateTime.now().minus(period)))
                 .map(it -> it.amount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public Collection<Recollection> recollections() {
+        return recollectionsById.values();
     }
 }

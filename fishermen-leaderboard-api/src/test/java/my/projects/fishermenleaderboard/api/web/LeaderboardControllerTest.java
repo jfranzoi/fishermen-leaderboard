@@ -126,13 +126,29 @@ class LeaderboardControllerTest {
     @Test
     void detail_viewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
-        fishermenHistory.addRecollection("0011", new Recollection(
-                "00aa", new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
-        ));
 
         mvc.perform(get("/fishermen/0011"))
                 .andExpect(jsonPath("$.id").value("0011"))
                 .andExpect(jsonPath("$.name").value("Fabrizio Benvenuto"))
-                .andExpect(jsonPath("$.picture").value(jpeg.toString()));
+                .andExpect(jsonPath("$.picture").value(jpeg.toString()))
+                .andExpect(jsonPath("$.recollections.size()").value(0));
+    }
+
+    @Test
+    void detail_recollections() throws Exception {
+        fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
+        fishermenHistory.addRecollection("0011", new Recollection(
+                "00aa", new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+        ));
+        fishermenHistory.addRecollection("0011", new Recollection(
+                "00bb", new BigDecimal("10.0"), ZonedDateTime.now(), jpeg
+        ));
+
+        mvc.perform(get("/fishermen/0011"))
+                .andExpect(jsonPath("$.id").value("0011"))
+                .andExpect(jsonPath("$.recollections[0].amount").value("30.5"))
+                .andExpect(jsonPath("$.recollections[0].date").exists())
+                .andExpect(jsonPath("$.recollections[1].amount").value("10.0"))
+                .andExpect(jsonPath("$.recollections[1].date").exists());
     }
 }
