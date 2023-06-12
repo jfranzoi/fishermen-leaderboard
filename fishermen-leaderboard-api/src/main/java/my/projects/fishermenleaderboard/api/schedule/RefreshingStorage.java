@@ -47,7 +47,7 @@ public class RefreshingStorage {
 
             client.recollections(fisherman._id).stream().forEach(recollection -> {
                 fishermenHistory.addRecollection(fisherman._id, new Recollection(
-                        recollection.kg, recollection.date, recollection.pictureRecollection
+                        recollection._id, recollection.kg, recollection.date, recollection.pictureRecollection
                 ));
             });
         });

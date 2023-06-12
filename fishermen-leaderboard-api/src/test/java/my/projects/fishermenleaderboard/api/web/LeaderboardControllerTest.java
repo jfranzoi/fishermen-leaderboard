@@ -40,7 +40,7 @@ class LeaderboardControllerTest {
     void index_viewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
         fishermenHistory.addRecollection("0011", new Recollection(
-                new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+                "00aa", new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
         ));
 
         mvc.perform(get("/fishermen?size=5&page=1"))
@@ -60,7 +60,7 @@ class LeaderboardControllerTest {
     void index_withinPeriod() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
         fishermenHistory.addRecollection("0011", new Recollection(
-                new BigDecimal("30.5"), ZonedDateTime.now().minusDays(10), jpeg
+                "00aa", new BigDecimal("30.5"), ZonedDateTime.now().minusDays(10), jpeg
         ));
 
         mvc.perform(get("/fishermen?days=5"))
@@ -71,7 +71,7 @@ class LeaderboardControllerTest {
     void index_firstPagination_tooFewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
         fishermenHistory.addRecollection("0011", new Recollection(
-                new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+                "00aa", new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
         ));
 
         mvc.perform(get("/fishermen?size=5&page=1"))
@@ -127,7 +127,7 @@ class LeaderboardControllerTest {
     void detail_viewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
         fishermenHistory.addRecollection("0011", new Recollection(
-                new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+                "00aa", new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
         ));
 
         mvc.perform(get("/fishermen/0011"))

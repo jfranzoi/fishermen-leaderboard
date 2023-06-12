@@ -50,7 +50,7 @@ class FishermenHistoryTest {
     void addRecollection_onExistingFisherman() {
         FishermenHistory history = new FishermenHistory();
         history.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
-        history.addRecollection("0011", new Recollection(new BigDecimal("18.50"), ZonedDateTime.now(), jpeg));
+        history.addRecollection("0011", new Recollection("00aa", new BigDecimal("18.50"), ZonedDateTime.now(), jpeg));
 
         List<String> amounts = history.collect(oneMonth).stream()
                 .map(it -> it.amountIn(oneMonth).toPlainString())
@@ -63,7 +63,7 @@ class FishermenHistoryTest {
     void addRecollection_onUnknownFisherman() {
         FishermenHistory history = new FishermenHistory();
         history.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
-        history.addRecollection("0099", new Recollection(new BigDecimal("18.50"), ZonedDateTime.now(), jpeg));
+        history.addRecollection("0099", new Recollection("00aa", new BigDecimal("18.50"), ZonedDateTime.now(), jpeg));
 
         List<String> amounts = history.collect(oneMonth).stream()
                 .map(it -> it.amountIn(oneMonth).toPlainString())
@@ -73,17 +73,32 @@ class FishermenHistoryTest {
     }
 
     @Test
+    void addRecollection_updateAlreadyExisting() {
+        FishermenHistory history = new FishermenHistory();
+        history.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
+        history.addRecollection("0011", new Recollection("00aa", new BigDecimal("10.40"), ZonedDateTime.now(), jpeg));
+        history.addRecollection("0011", new Recollection("00aa", new BigDecimal("18.50"), ZonedDateTime.now(), jpeg));
+
+        List<String> amounts = history.collect(oneMonth).stream()
+                .map(it -> it.amountIn(oneMonth).toPlainString())
+                .collect(Collectors.toList());
+
+        assertThat(amounts, contains("18.50"));
+    }
+
+
+    @Test
     void collect_rankingByAmount() {
         FishermenHistory history = new FishermenHistory();
 
         history.addFisherman("0011", "Benedetto", "Carpi", jpeg);
-        history.addRecollection("0011", new Recollection(new BigDecimal("0"), ZonedDateTime.now(), jpeg));
+        history.addRecollection("0011", new Recollection("00aa", new BigDecimal("0"), ZonedDateTime.now(), jpeg));
 
         history.addFisherman("0022", "Fabrizio", "Benvenuto", jpeg);
-        history.addRecollection("0022", new Recollection(new BigDecimal("18.50"), ZonedDateTime.now(), jpeg));
+        history.addRecollection("0022", new Recollection("00aa", new BigDecimal("18.50"), ZonedDateTime.now(), jpeg));
 
         history.addFisherman("0033", "Paulo", "Alvarez", jpeg);
-        history.addRecollection("0033", new Recollection(new BigDecimal("38.20"), ZonedDateTime.now(), jpeg));
+        history.addRecollection("0033", new Recollection("00aa", new BigDecimal("38.20"), ZonedDateTime.now(), jpeg));
 
         List<String> names = history.collect(oneMonth).stream()
                 .map(it -> it.name())
@@ -101,13 +116,13 @@ class FishermenHistoryTest {
         FishermenHistory history = new FishermenHistory();
 
         history.addFisherman("0011", "Benedetto", "Carpi", jpeg);
-        history.addRecollection("0011", new Recollection(new BigDecimal("10.50"), ZonedDateTime.now().minusDays(10), jpeg));
+        history.addRecollection("0011", new Recollection("00aa", new BigDecimal("10.50"), ZonedDateTime.now().minusDays(10), jpeg));
 
         history.addFisherman("0022", "Fabrizio", "Benvenuto", jpeg);
-        history.addRecollection("0022", new Recollection(new BigDecimal("18.50"), ZonedDateTime.now().minusDays(4), jpeg));
+        history.addRecollection("0022", new Recollection("00aa", new BigDecimal("18.50"), ZonedDateTime.now().minusDays(4), jpeg));
 
         history.addFisherman("0033", "Paulo", "Alvarez", jpeg);
-        history.addRecollection("0033", new Recollection(new BigDecimal("38.20"), ZonedDateTime.now().minusDays(45), jpeg));
+        history.addRecollection("0033", new Recollection("00aa", new BigDecimal("38.20"), ZonedDateTime.now().minusDays(45), jpeg));
 
         List<String> names = history.collect(oneMonth).stream()
                 .map(it -> it.name())

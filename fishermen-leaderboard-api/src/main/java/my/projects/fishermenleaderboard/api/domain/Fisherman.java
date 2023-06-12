@@ -4,18 +4,18 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.Period;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fisherman {
     private final String id;
-    private final List<Recollection> recollections;
+    private final Map<String, Recollection> recollectionsById;
     private String name;
     private URL picture;
 
     public Fisherman(String id) {
         this.id = id;
-        this.recollections = new ArrayList<>();
+        this.recollectionsById = new HashMap<>();
     }
 
     public String id() {
@@ -41,11 +41,11 @@ public class Fisherman {
     }
 
     public void add(Recollection recollection) {
-        recollections.add(recollection);
+        recollectionsById.put(recollection.id, recollection);
     }
 
     public BigDecimal amountIn(Period period) {
-        return recollections.stream()
+        return recollectionsById.values().stream()
                 .filter(it -> it.date.isAfter(ZonedDateTime.now().minus(period)))
                 .map(it -> it.amount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);

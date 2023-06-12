@@ -5,11 +5,13 @@ import java.net.URL;
 import java.time.ZonedDateTime;
 
 public class Recollection {
+    String id;
     BigDecimal amount;
     ZonedDateTime date;
     URL picture;
 
-    public Recollection(BigDecimal amount, ZonedDateTime date, URL picture) {
+    public Recollection(String id, BigDecimal amount, ZonedDateTime date, URL picture) {
+        this.id = id;
         this.amount = amount;
         this.date = date;
         this.picture = picture;
@@ -18,7 +20,7 @@ public class Recollection {
     @Override
     public String toString() {
         return "Recollection{" +
-                "amount=" + amount + ", date=" + date + ", picture=" + picture +
+                "id='" + id + ",amount=" + amount + ",date=" + date + ",picture=" + picture +
                 '}';
     }
 }

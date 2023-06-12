@@ -6,20 +6,21 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 public class FishermenHistory {
     private static final Logger LOGGER = LoggerFactory.getLogger(FishermenHistory.class);
 
-    private List<Fisherman> fishermen = new ArrayList<>();
+    private Map<String, Fisherman> fishermen;
+
+    public FishermenHistory() {
+        this.fishermen = new HashMap<>();
+    }
 
     public Optional<Fisherman> by(String id) {
-        return fishermen.stream().filter(it -> id.equals(it.id())).findFirst();
+        return Optional.ofNullable(fishermen.get(id));
     }
 
     public void addFisherman(String id, String name, String surname, URL picture) {
@@ -35,14 +36,18 @@ public class FishermenHistory {
     }
 
     public List<Fisherman> collect(Period period) {
-        return fishermen.stream()
-                .sorted(Comparator.comparing((Fisherman it) -> it.amountIn(period)).reversed())
+        return fishermen.values().stream()
+                .sorted(byRanking(period))
                 .collect(Collectors.toList());
+    }
+
+    private Comparator<Fisherman> byRanking(Period period) {
+        return Comparator.comparing((Fisherman it) -> it.amountIn(period)).reversed();
     }
 
     private Fisherman addWith(String id) {
         Fisherman created = new Fisherman(id);
-        fishermen.add(created);
+        fishermen.put(id, created);
         return created;
     }
 }

@@ -183,6 +183,15 @@ class OgyreExamClientTest {
 
         List<OgyreRecollection> response = new OgyreExamClient(restTemplate).recollections("61eacd09010d36584891e10a");
 
+        List<String> ids = response.stream()
+                .map(it -> it._id)
+                .collect(Collectors.toList());
+        assertThat(ids, contains(
+                "646c80c0a0a7f5da7666c68c",
+                "646c80e9a0a7f5da7666c697",
+                "647606ec90b6fb6946b694fb"
+        ));
+
         List<BigDecimal> amounts = response.stream()
                 .map(it -> it.kg)
                 .collect(Collectors.toList());
