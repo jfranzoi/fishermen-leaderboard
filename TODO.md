@@ -11,7 +11,7 @@
 * (DONE) fisherman detail, recollections: date, amount (kg)
 * (DONE) fisherman detail: last 10 recollections
 * (DONE) pictures: fishermen picture @ board
-* (TODO) pictures: recollection picture @ fisherman detail
+* (DONE) pictures: recollection picture @ fisherman detail
 * (DONE) NFR, security: API key not accessible to clients
 * (TODO) NFR, usability: desktop and mobile
 
