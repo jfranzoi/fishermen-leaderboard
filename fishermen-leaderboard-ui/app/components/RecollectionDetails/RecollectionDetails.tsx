@@ -1,4 +1,4 @@
-import { Recollection } from '../../../app/hooks/useFishermen';
+import { Recollection } from '../../models/Recollection';
 import Image from 'next/image';
 import styles from './RecollectionDetails.module.css';
 

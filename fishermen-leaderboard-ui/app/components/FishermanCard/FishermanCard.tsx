@@ -1,4 +1,4 @@
-import { Fisherman } from '../../hooks/useFishermen';
+import { Fisherman } from '../../models/Fisherman';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './FishermanCard.module.css';

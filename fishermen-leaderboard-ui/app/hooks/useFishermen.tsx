@@ -1,20 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Fisherman } from '../models/Fisherman';
 
 const baseURL = 'http://localhost:8080';
-
-export type Fisherman = {
-    id: string;
-    name: string;
-    amount: number;
-    picture: string;
-    recollections: Recollection[];
-}
-
-export type Recollection = {
-    amount: number;
-    date: Date;
-    picture: string;
-}
 
 export const useFishermen = () => {
     const [results, setResults] = useState<Fisherman[]>([])

@@ -1,4 +1,4 @@
-import { Fisherman } from '../../hooks/useFishermen';
+import { Fisherman } from '../../models/Fisherman';
 import RecollectionDetails from '../RecollectionDetails/RecollectionDetails';
 import Image from 'next/image';
 import styles from './FishermanDetails.module.css';
