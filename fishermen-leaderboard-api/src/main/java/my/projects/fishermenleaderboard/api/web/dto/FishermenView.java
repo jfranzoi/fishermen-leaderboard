@@ -1,4 +1,4 @@
-package my.projects.fishermenleaderboard.api.web;
+package my.projects.fishermenleaderboard.api.web.dto;
 
 import java.math.BigDecimal;
 import java.net.URL;

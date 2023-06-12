@@ -1,7 +1,7 @@
 'use client';
 
 import { useFishermen } from '../app/hooks/useFishermen';
-import FishermanCard from '../app/components/FishermanCard';
+import FishermanCard from '../app/components/FishermanCard/FishermanCard';
 import styles from './index.module.css';
 
 export default function Index() {

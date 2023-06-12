@@ -18,6 +18,10 @@ public class FishermenHistory {
 
     private List<Fisherman> fishermen = new ArrayList<>();
 
+    public Optional<Fisherman> by(String id) {
+        return fishermen.stream().filter(it -> id.equals(it.id())).findFirst();
+    }
+
     public void addFisherman(String id, String name, String surname, URL picture) {
         LOGGER.info("Adding fisherman, id: {}, name: {}, surname: {}", id, name, surname);
         by(id).orElseGet(() -> addWith(id))
@@ -40,9 +44,5 @@ public class FishermenHistory {
         Fisherman created = new Fisherman(id);
         fishermen.add(created);
         return created;
-    }
-
-    private Optional<Fisherman> by(String id) {
-        return fishermen.stream().filter(it -> id.equals(it.id())).findFirst();
     }
 }

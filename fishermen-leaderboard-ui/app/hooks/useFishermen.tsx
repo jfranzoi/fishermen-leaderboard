@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const baseURL = 'http://localhost:8080';
 
@@ -28,4 +28,23 @@ export const useFishermen = () => {
     useEffect(loadNext, []);
 
     return [results, isLoading, loadNext] as const;
+};
+
+export const useFishermanDetail = (id: string) => {
+    const [result, setResult] = useState<Fisherman | undefined>(undefined)
+    const [isLoading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (id) {
+            setLoading(true)
+            fetch(`${baseURL}/fishermen/${id}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    setResult(data)
+                    setLoading(false)
+                })
+        }
+    }, [id]);
+
+    return [result, isLoading] as const;
 };

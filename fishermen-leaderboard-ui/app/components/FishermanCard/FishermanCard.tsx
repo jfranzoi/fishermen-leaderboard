@@ -1,4 +1,4 @@
-import { Fisherman } from "../hooks/useFishermen";
+import { Fisherman } from '../../hooks/useFishermen';
 import styles from './FishermanCard.module.css';
 
 declare type Props = {

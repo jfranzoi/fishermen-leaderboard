@@ -30,14 +30,14 @@ class LeaderboardControllerTest {
     }
 
     @Test
-    void contentMapping() throws Exception {
+    void index_contentMapping() throws Exception {
         mvc.perform(get("/fishermen"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void viewData() throws Exception {
+    void index_viewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
         fishermenHistory.addRecollection("0011", new Recollection(
                 new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
@@ -51,13 +51,13 @@ class LeaderboardControllerTest {
     }
 
     @Test
-    void noData() throws Exception {
+    void index_noData() throws Exception {
         mvc.perform(get("/fishermen"))
                 .andExpect(jsonPath("$.size()").value("0"));
     }
 
     @Test
-    void withinPeriod() throws Exception {
+    void index_withinPeriod() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
         fishermenHistory.addRecollection("0011", new Recollection(
                 new BigDecimal("30.5"), ZonedDateTime.now().minusDays(10), jpeg
@@ -68,7 +68,7 @@ class LeaderboardControllerTest {
     }
 
     @Test
-    void firstPagination_tooFewData() throws Exception {
+    void index_firstPagination_tooFewData() throws Exception {
         fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
         fishermenHistory.addRecollection("0011", new Recollection(
                 new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
@@ -79,7 +79,7 @@ class LeaderboardControllerTest {
     }
 
     @Test
-    void firstPagination_enoughData() throws Exception {
+    void index_firstPagination_enoughData() throws Exception {
         IntStream.rangeClosed(1, 8).forEach(it -> {
             fishermenHistory.addFisherman(
                     String.format("000%s", it),
@@ -94,7 +94,7 @@ class LeaderboardControllerTest {
     }
 
     @Test
-    void nextPagination_fewData() throws Exception {
+    void index_nextPagination_fewData() throws Exception {
         IntStream.rangeClosed(1, 8).forEach(it -> {
             fishermenHistory.addFisherman(
                     String.format("000%s", it),
@@ -106,5 +106,33 @@ class LeaderboardControllerTest {
 
         mvc.perform(get("/fishermen?size=5&page=2"))
                 .andExpect(jsonPath("$.size()").value("3"));
+    }
+
+    @Test
+    void detail_noData() throws Exception {
+        mvc.perform(get("/fishermen/0011"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void detail_contentMapping() throws Exception {
+        fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
+
+        mvc.perform(get("/fishermen/0011"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void detail_viewData() throws Exception {
+        fishermenHistory.addFisherman("0011", "Fabrizio", "Benvenuto", jpeg);
+        fishermenHistory.addRecollection("0011", new Recollection(
+                new BigDecimal("30.5"), ZonedDateTime.now(), jpeg
+        ));
+
+        mvc.perform(get("/fishermen/0011"))
+                .andExpect(jsonPath("$.id").value("0011"))
+                .andExpect(jsonPath("$.name").value("Fabrizio Benvenuto"))
+                .andExpect(jsonPath("$.picture").value(jpeg.toString()));
     }
 }
