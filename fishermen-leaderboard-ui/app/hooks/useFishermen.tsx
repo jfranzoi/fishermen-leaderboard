@@ -17,6 +17,10 @@ export const useFishermen = () => {
                 setResults(results.concat(data))
                 setLoading(false)
             })
+            .catch((error) => {
+                console.log('Could not collect fishermen, error: ', error)
+                setLoading(false)
+            })
     }
 
     useEffect(loadNext, []);
