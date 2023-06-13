@@ -29,3 +29,5 @@ APIs integration is using an *API-KEY*, which is not exposed to clients. Both AP
 `ui` component is basically a NextJS starter application, reusing its default template. Decoupling from data fetching and presentation is achieved by leveraging on [useFishermen.tsx](fishermen-leaderboard-ui/src/hooks/useFishermen.tsx) custom hook. Please note: no configuration is available at the moment for its base URL, as it's hard-coded in the hook code.
 
 Two reusable `ui` components are availbale in [components](fishermen-leaderboard-ui/src/components/) folder, to present `FishermanCard` on homepage, and `RecollectionDetails` on detail page.
+
+Feel free to provide any feedback!
