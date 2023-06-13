@@ -1,0 +1,15 @@
+.rank {
+    float: right;
+}
+
+.rank.r1 {
+    color: red;
+}
+
+.rank.r2 {
+    color: darkred;
+}
+
+.rank.r3 {
+    color: darkgoldenrod;
+}

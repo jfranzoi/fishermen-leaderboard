@@ -1,5 +1,5 @@
 export type Recollection = {
     amount: number;
-    date: Date;
+    date: string;
     picture: string;
 }
