@@ -22,4 +22,4 @@ As we have two APIs to be consumed and correlated (`fishermen` and `recollection
 * [`RefreshingStorage`](fishermen-leaderboard-api/src/main/java/my/projects/fishermenleaderboard/api/schedule/RefreshingStorage.java) and its `@Scheduled` annotation
 * `application.schedule.refreshing-storage.minutes` in [application.properties](fishermen-leaderboard-api/src/main/resources/application.properties) configuration file.
 
-APIs integration is using an *API-KEY*, which is configured in in [application.properties](fishermen-leaderboard-api/src/main/resources/application.properties) and not exposed to clients.
+APIs integration is using an *API-KEY*, which is not exposed to clients. Both API-KEY and base URL can be configured in [application.properties](fishermen-leaderboard-api/src/main/resources/application.properties) as `application.ogyre.api-key` and `application.ogyre.base-uri`.
