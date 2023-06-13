@@ -13,7 +13,7 @@
 * (DONE) pictures: fishermen picture @ board
 * (DONE) pictures: recollection picture @ fisherman detail
 * (DONE) NFR, security: API key not accessible to clients
-* (TODO) NFR, usability: desktop and mobile
+* (DONE) NFR, usability: desktop and mobile
 
 
 ## Notes
