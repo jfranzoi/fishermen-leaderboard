@@ -8,11 +8,13 @@ To run it, execute:
 ./build-and-start.sh
 ```
 
-This would build and start both `api` and `ui` components, as docker containers.
+This would build and start both `api` and `ui` components.
 
 ## Requirements
 
 `ui` component is a **NextJS** front-end application. `api` component is a **Java 11** web application, based on **Spring Boot** and built with **maven**.
+
+Both are started as docker containers, binding on two different host ports (`3000` for `ui` and `8080` for `api`).
 
 ## Notes
 
@@ -23,3 +25,7 @@ As we have two APIs to be consumed and correlated (`fishermen` and `recollection
 * `application.schedule.refreshing-storage.minutes` in [application.properties](fishermen-leaderboard-api/src/main/resources/application.properties) configuration file.
 
 APIs integration is using an *API-KEY*, which is not exposed to clients. Both API-KEY and base URL can be configured in [application.properties](fishermen-leaderboard-api/src/main/resources/application.properties) as `application.ogyre.api-key` and `application.ogyre.base-uri`.
+
+`ui` component is basically a NextJS starter application, reusing its default template. Decoupling from data fetching and presentation is achieved by leveraging on [useFishermen.tsx](fishermen-leaderboard-ui/src/hooks/useFishermen.tsx) custom hook. Please note: no configuration is available at the moment for its base URL, as it's hard-coded in the hook code.
+
+Two reusable `ui` components are availbale in [components](fishermen-leaderboard-ui/src/components/) folder, to present `FishermanCard` on homepage, and `RecollectionDetails` on detail page.
