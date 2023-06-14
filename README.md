@@ -5,7 +5,7 @@ Sample web-application to solve the "fishermen leaderboard" coding problem.
 To run it, execute:
 
 ```
-./build-and-start.sh
+docker-compose up
 ```
 
 This would build and start both `api` and `ui` components.

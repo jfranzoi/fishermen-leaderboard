@@ -1,0 +1,9 @@
+services:
+  ui:
+    build: fishermen-leaderboard-ui
+    ports:
+      - 3000:3000
+  api:
+    build: fishermen-leaderboard-api
+    ports:
+      - 8080:8080
