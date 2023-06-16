@@ -1,0 +1,34 @@
+{
+  "taskDefinition": {
+    "family": "fishermen-leaderboard",
+	"executionRoleArn": "{{ shell "aws_iam_role ecsTaskExecutionRole" }}",
+	"taskRoleArn": "{{ shell "aws_iam_role ecsTaskExecutionRole" }}",
+    "placementConstraints": [ ],
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "512",
+    "memory": "1024",
+    "volumes": [ ],
+    "containerDefinitions": [
+      {
+        "name": "application",
+        "image": "ghcr.io/jfranzoi/fishermen-leaderboard_api:latest",
+        "portMappings": [
+          {
+            "containerPort": 8080
+          }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "fishermen-leaderboard",
+                "awslogs-stream-prefix": "ecs",
+                "awslogs-region": "eu-west-1"
+            }
+        }
+      }
+    ]
+  }
+}
