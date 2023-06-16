@@ -1,9 +1,13 @@
+version: '2'
+
 services:
   ui:
-    build: fishermen-leaderboard-ui
+    build: ./fishermen-leaderboard-ui
+    image: fishermen-leaderboard-ui
     ports:
       - 3000:3000
   api:
-    build: fishermen-leaderboard-api
+    build: ./fishermen-leaderboard-api
+    image: fishermen-leaderboard-api
     ports:
       - 8080:8080
