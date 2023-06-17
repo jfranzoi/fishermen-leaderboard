@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Fisherman } from '../models/Fisherman';
 
-const baseURL = 'http://localhost:8080';
+const baseURL = '/api';
 
 export const useFishermen = () => {
     const [results, setResults] = useState<Fisherman[]>([])
