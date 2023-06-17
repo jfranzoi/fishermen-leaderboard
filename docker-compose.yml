@@ -1,13 +1,20 @@
 version: '2'
 
 services:
+  proxy:
+    build: ./fishermen-leaderboard-proxy
+    image: fishermen-leaderboard-proxy
+    ports:
+        - 80:80
+    environment:
+        - API_URL=http://host.docker.internal:8080
   ui:
     build: ./fishermen-leaderboard-ui
     image: fishermen-leaderboard-ui
     ports:
-      - 3000:3000
+        - 3000:3000
   api:
     build: ./fishermen-leaderboard-api
     image: fishermen-leaderboard-api
     ports:
-      - 8080:8080
+        - 8080:8080
