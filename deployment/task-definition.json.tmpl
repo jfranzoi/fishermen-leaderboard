@@ -24,6 +24,10 @@
           {
             "name": "API_URL",
             "value": "http://localhost:8080"
+          },
+          {
+            "name": "UI_URL",
+            "value": "http://localhost:3000"
           }
         ],
         "logConfiguration": {
@@ -41,6 +45,23 @@
         "portMappings": [
           {
             "containerPort": 8080
+          }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "fishermen-leaderboard",
+                "awslogs-stream-prefix": "ecs",
+                "awslogs-region": "eu-west-1"
+            }
+        }
+      },        
+      {
+        "name": "ui",
+        "image": "ghcr.io/jfranzoi/fishermen-leaderboard-ui:latest",
+        "portMappings": [
+          {
+            "containerPort": 3000
           }
         ],
         "logConfiguration": {

@@ -8,6 +8,7 @@ services:
         - 80:80
     environment:
         - API_URL=http://host.docker.internal:8080
+        - UI_URL=http://host.docker.internal:3000
   ui:
     build: ./fishermen-leaderboard-ui
     image: fishermen-leaderboard-ui

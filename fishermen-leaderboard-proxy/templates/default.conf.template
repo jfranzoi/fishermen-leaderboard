@@ -1,13 +1,21 @@
 server {
     listen  ${NGINX_PORT};
     
+    # health check
     location /status {
         add_header Content-Type text/plain;
         return 200 'OK';
     }
     
+    # reverse proxy: api
     location /api {
         rewrite /api(.*) $1 break;
         proxy_pass ${API_URL};
+    }
+    
+    # reverse proxy: fallback to ui
+    # keeping original location to avoid URL rewriting on HTML content
+    location / {
+        proxy_pass ${UI_URL};
     }
 }
