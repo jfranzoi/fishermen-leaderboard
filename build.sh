@@ -1,26 +1,29 @@
 #!/usr/bin/env bash
 
-echo "Building"
+REGISTRY="ghcr.io/jfranzoi"
+VERSION="00-$( git rev-parse --short HEAD )"
+
+echo "Building version $VERSION"
 docker-compose build
 
-docker tag fishermen-leaderboard-proxy:latest ghcr.io/jfranzoi/fishermen-leaderboard-proxy:latest
-docker tag fishermen-leaderboard-proxy:latest ghcr.io/jfranzoi/fishermen-leaderboard-proxy:00-$( git rev-parse --short HEAD )
+docker tag fishermen-leaderboard-proxy:latest $REGISTRY/fishermen-leaderboard-proxy:latest
+docker tag fishermen-leaderboard-proxy:latest $REGISTRY/fishermen-leaderboard-proxy:$VERSION
 
-docker tag fishermen-leaderboard-api:latest ghcr.io/jfranzoi/fishermen-leaderboard-api:latest
-docker tag fishermen-leaderboard-api:latest ghcr.io/jfranzoi/fishermen-leaderboard-api:00-$( git rev-parse --short HEAD )
+docker tag fishermen-leaderboard-api:latest $REGISTRY/fishermen-leaderboard-api:latest
+docker tag fishermen-leaderboard-api:latest $REGISTRY/fishermen-leaderboard-api:$VERSION
 
-docker tag fishermen-leaderboard-ui:latest ghcr.io/jfranzoi/fishermen-leaderboard-ui:latest
-docker tag fishermen-leaderboard-ui:latest ghcr.io/jfranzoi/fishermen-leaderboard-ui:00-$( git rev-parse --short HEAD )
+docker tag fishermen-leaderboard-ui:latest $REGISTRY/fishermen-leaderboard-ui:latest
+docker tag fishermen-leaderboard-ui:latest $REGISTRY/fishermen-leaderboard-ui:$VERSION
 
 echo "Publishing"
 
-docker push ghcr.io/jfranzoi/fishermen-leaderboard-proxy:latest
-docker push ghcr.io/jfranzoi/fishermen-leaderboard-proxy:00-$( git rev-parse --short HEAD )
+docker push $REGISTRY/fishermen-leaderboard-proxy:latest
+docker push $REGISTRY/fishermen-leaderboard-proxy:$VERSION
 
-docker push ghcr.io/jfranzoi/fishermen-leaderboard-api:latest
-docker push ghcr.io/jfranzoi/fishermen-leaderboard-api:00-$( git rev-parse --short HEAD )
+docker push $REGISTRY/fishermen-leaderboard-api:latest
+docker push $REGISTRY/fishermen-leaderboard-api:$VERSION
 
-docker push ghcr.io/jfranzoi/fishermen-leaderboard-ui:latest
-docker push ghcr.io/jfranzoi/fishermen-leaderboard-ui:00-$( git rev-parse --short HEAD )
+docker push $REGISTRY/fishermen-leaderboard-ui:latest
+docker push $REGISTRY/fishermen-leaderboard-ui:$VERSION
 
 echo "Done"

@@ -14,7 +14,7 @@
     "containerDefinitions": [
       {
         "name": "application",
-        "image": "ghcr.io/jfranzoi/fishermen-leaderboard-proxy:latest",
+        "image": "{{ .env.docker_registry }}/fishermen-leaderboard-proxy:latest",
         "portMappings": [
           {
             "containerPort": 80
@@ -41,7 +41,7 @@
       },        
       {
         "name": "api",
-        "image": "ghcr.io/jfranzoi/fishermen-leaderboard-api:latest",
+        "image": "{{ .env.docker_registry }}/fishermen-leaderboard-api:latest",
         "portMappings": [
           {
             "containerPort": 8080
@@ -58,7 +58,7 @@
       },        
       {
         "name": "ui",
-        "image": "ghcr.io/jfranzoi/fishermen-leaderboard-ui:latest",
+        "image": "{{ .env.docker_registry }}/fishermen-leaderboard-ui:latest",
         "portMappings": [
           {
             "containerPort": 3000

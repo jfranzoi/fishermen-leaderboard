@@ -25,6 +25,9 @@ public class RefreshingStorage {
     @Value("${application.ogyre.api-key}")
     private String apiKey;
 
+    @Value("${application.schedule.refreshing-storage.minutes}")
+    private String scheduleIntervalMinutes;
+
     @Autowired
     private FishermenHistory fishermenHistory;
 
@@ -34,6 +37,7 @@ public class RefreshingStorage {
     public void init() {
         client = new OgyreExamClient(new RestOperationsCreator(baseUri, apiKey).create());
         LOGGER.info("Client created, base URI: {}", baseUri);
+        LOGGER.info("Scheduling refresh, every [{}] minutes", scheduleIntervalMinutes);
     }
 
     @Scheduled(fixedRateString = "${application.schedule.refreshing-storage.minutes}", timeUnit = TimeUnit.MINUTES)
